@@ -1,6 +1,7 @@
 # oxidize
 Rust 
 
+`cargo run` 
 
 ##### Credits
 
