@@ -10,6 +10,7 @@ mod enums;
 mod unions;
 mod option;
 mod arrays;
+mod opover;
 
 const DEATH_BY:i32 = 787;
 static mut SOMETHING_STATIC:i8 = 123;
@@ -51,5 +52,5 @@ fn scope_and_shadowing(){
 }
 
 fn main(){
-    arrays::arrays();
+    opover::operator_overload()
 }
