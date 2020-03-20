@@ -1,2 +1,4 @@
 # oxidize
-Being rusty
+Rust 
+
+`cargo run` 
