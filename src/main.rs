@@ -11,6 +11,24 @@ mod unions;
 mod option;
 mod arrays;
 mod opover;
+mod vectors;
+mod slices;
+mod tupples;
+mod hash_map;
+mod pm;
+mod generics;
+mod functions;
+mod closures;
+mod hofuc;
+mod traits;
+mod intos;
+mod drop;
+mod statdis;
+mod dynadis;
+mod lifetime;
+mod rc_count;
+mod arc_count;
+mod circ_ref;
 
 const DEATH_BY:i32 = 787;
 static mut SOMETHING_STATIC:i8 = 123;
@@ -52,5 +70,5 @@ fn scope_and_shadowing(){
 }
 
 fn main(){
-    opover::operator_overload()
+    circ_ref::cref()
 }
