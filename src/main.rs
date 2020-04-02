@@ -1,6 +1,9 @@
 #![allow(dead_code)]
 #![allow(unused_variables)]
 
+extern crate rand;
+
+use rand::Rng;
 use std::mem;
 
 mod snh;
@@ -69,6 +72,12 @@ fn scope_and_shadowing(){
     }
 }
 
+fn use_rand(){
+    let mut rng = rand::thread_rng();
+    let b: bool=  rng.gen();
+    println!("So it is {}?", b)
+}
+
 fn main(){
-    circ_ref::cref()
+    use_rand();
 }
