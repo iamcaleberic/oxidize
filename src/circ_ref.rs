@@ -1,51 +1,60 @@
-use std::rc::Rc;
-use std::cell::RefCell;
-
 // many students belong to many courses
 
 struct Student {
-    name: String,
-    courses: Vec<Rc<RefCell<Course>>>
-}
-
-
-struct Course{
-    name: String,
-    students: Vec<Rc<RefCell<Student>>>
+    name: String
 }
 
 impl Student {
-    fn new(name: &str) -> Student {
-        Student {
-            name: name.into(),
-            courses: Vec::new()
-        }
+    fn courses(&self, platform: Platform) -> Vec<String> {
+        platform.enrollments.iter()
+        .filter(|&e|
+            e.student.name == self.name)
+            .map(|e| e.course.name.clone())
+                .collect()
     }
 }
 
-impl Course {
-    fn new(name: &str) -> Course {
-        Course {
-            name: name.into(),
-            students: Vec::new()
-        }
+struct Course {
+    name: String
+}
+
+struct Enrollment<'a> {
+    student: &'a Student,
+    course: &'a Course
+}
+
+impl<'a> Enrollment<'a> {
+    fn new(student: &'a Student, course: &'a Course) -> Enrollment<'a> {
+        Enrollment {student, course }
+    }
+}
+
+struct Platform<'a> {
+    enrollments: Vec<Enrollment<'a>>
+}
+
+impl<'a> Platform<'a> {
+    fn new() -> Platform<'a> {
+        Platform {
+            enrollments: Vec::new()
+         }
     }
 
-    fn add_student(course: Rc<RefCell<Course>>, student: Rc<RefCell<Student>> ) {
-        student.borrow_mut().courses.push(course.clone());
-        course.borrow_mut().students.push(student.clone());
-        course.borrow_mut().students.push(student.clone());
+    fn enroll(&mut self, student: &'a Student, course: &'a Course) {
+        self.enrollments.push(
+            Enrollment::new(student, course)
+        )
     }
 }
 
 pub fn cref(){
-    let muis =  Rc::new(RefCell::new(Student::new("Muis")));
-    let kat =  Rc::new(RefCell::new(Student::new("kat")));
+    let muis =  Student {name: "Muis".into()};
+    let course =  Course {name: "Running from cats".into()};
 
-    let course =  Course::new("AstroSomething");
-    let magic_course = Rc::new(RefCell::new(course));
+    let  mut p =  Platform::new();
+    p.enroll(&muis, &course);
 
-    // course.add_student(muis);
-    Course::add_student(magic_course.clone(), muis);
-    Course::add_student(magic_course, kat);
+    for c in muis.courses(p){
+        println!("Muis is taking {}",c)
+    }
 }
