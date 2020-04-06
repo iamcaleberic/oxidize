@@ -32,6 +32,7 @@ mod lifetime;
 mod rc_count;
 mod arc_count;
 mod circ_ref;
+mod multi;
 
 const DEATH_BY:i32 = 787;
 static mut SOMETHING_STATIC:i8 = 123;
@@ -79,5 +80,6 @@ fn use_rand(){
 }
 
 fn main(){
-    use_rand();
+    // use_rand();
+    multi::mx()
 }
